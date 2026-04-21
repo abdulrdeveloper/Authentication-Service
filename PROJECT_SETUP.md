@@ -45,6 +45,18 @@ pnpm i tsc-watch -D
 mkdir src
 touch src/index.ts
 ```
+### Step 8 — install express and types for express (install types as a dev dependency)
+
+```bash
+pnpm i express
+pnpm i @types/express -D
+```
+
+### Step 9 — install types for node (install types as a dev dependency)
+
+```bash
+pnpm i @types/node -D
+```
 
 ---
 
@@ -101,6 +113,9 @@ pnpm init
 npx tsc --init
 npx gitignore node
 pnpm i tsc-watch -D
+pnpm i express
+pnpm i @types/express -D
+pnpm i @types/node -D
 ```
 
 Then set  `outDir` and `rootDir` in `tsconfig.json` and 
