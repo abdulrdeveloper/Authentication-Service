@@ -1,6 +1,7 @@
 # 🚀 Backend Authentication Service - Project Setup
 
 ## 📦 Prerequisites
+
 - Node.js installed
 - VS Code installed
 
@@ -8,28 +9,33 @@
 
 ## 🛠️ Step by Step Setup
 
-### Step 1 —  install pnpm (globally)
+### Step 1 — install pnpm (globally)
+
 ```bash
 npm install -g pnpm  <!---pnpm is a fast package manager , it also fatch the same data from npm---!>
 ```
 
 ### Step 2 — Create a Project folder
+
 ```bash
 mkdir "Authentication Service"
 cd "Authentication Service"
 ```
 
 ### Step 3 — Initialize the Project
+
 ```bash
 pnpm init
 ```
 
-### Step 4 — Create TypeScript config 
+### Step 4 — Create TypeScript config
+
 ```bash
 npx tsc --init
 ```
 
-### Step 5 — Create gitignore 
+### Step 5 — Create gitignore
+
 ```bash
 npx gitignore node
 ```
@@ -41,10 +47,12 @@ pnpm i tsc-watch -D
 ```
 
 ### Step 7 — Create src folder and index.ts file
+
 ```bash
 mkdir src
 touch src/index.ts
 ```
+
 ### Step 8 — install express and types for express (install types as a dev dependency)
 
 ```bash
@@ -61,15 +69,21 @@ pnpm i @types/node -D
 ---
 
 ## ⚙️ tsconfig.json Settings
+
 Uncomment this in `tsconfig.json`:
+
 ```json
 "outDir": "./dist",
 "rootDir": "./src",
+"types": ["node"]
+"lib": ["esnext"],
+    "types": ["node"],
 ```
 
 ---
 
 ## 📝 package.json Scripts
+
 ```json
 {
   "scripts": {
@@ -82,44 +96,13 @@ Uncomment this in `tsconfig.json`:
 
 ---
 
-## 📁 Project Structure
-```
-Authentication Service/
-├── node_modules/
-├── src/
-│   └── index.ts      ← write code here
-├── dist/             ← code will be auto generate here
-├── .gitignore
-├── package.json
-├── pnpm-lock.yaml
-└── tsconfig.json
-```
-
 ---
 
 ## 📚 npm vs npx vs pnpm
 
-| | npm | npx | pnpm |
-|--|-----|-----|------|
-| Use Case | Install | Execute | Fast Install |
-| Example | `npm install express` | `npx tsc --init` | `pnpm install express` |
-
----
-
-## ⚡ Quick Start (Next time)
-```bash
-npm install -g pnpm
-pnpm init
-npx tsc --init
-npx gitignore node
-pnpm i tsc-watch -D
-pnpm i express
-pnpm i @types/express -D
-pnpm i @types/node -D
-```
-
-Then set  `outDir` and `rootDir` in `tsconfig.json` and 
-create a src folder with index.ts file (for testing otherwise compilor will give error)
- — and run `pnpm run dev`! ✅
+|          | npm                   | npx              | pnpm                   |
+| -------- | --------------------- | ---------------- | ---------------------- |
+| Use Case | Install               | Execute          | Fast Install           |
+| Example  | `npm install express` | `npx tsc --init` | `pnpm install express` |
 
 ---
