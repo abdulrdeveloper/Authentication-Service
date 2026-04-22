@@ -9,11 +9,11 @@ export function createApplication(): Express {
 
 
     // Routes
-    app.get('/', (req, res) => {
+    app.get('/', (req:any, res:any) => {
         return res.json({ message: 'Welcome to AR Auth Service, It`s Working' })
     });
 
-    app.post('/data', (req, res) => {
+    app.post('/data', (req:any, res:any) => {
         return res.json({ message: 'Welcome to AR Auth Service , Data route is working' })
     })
 
