@@ -1,12 +1,13 @@
 import { Request, Response } from 'express'
-import { signupPayloadModel } from './models';
+import { signinPayloadModel, signupPayloadModel } from './models';
 import { createHmac, randomBytes } from 'node:crypto'
 import db from '../../db';
 import { usersTable } from '../../db/schema';
 import { eq } from 'drizzle-orm';
+import { createUserToken } from '../utils/token';
 
 class AuthenticationControlller {
-    
+
     public async handleSignup(req: Request, res: Response) {
         const validationResult = await signupPayloadModel.safeParseAsync(req.body)
         if (validationResult.error) return res.status(400).json({ message: 'body vaildation failed', error: validationResult.error.issues });
@@ -30,6 +31,24 @@ class AuthenticationControlller {
 
         return res.status(201).json({ message: 'user has been created successfully', data: { id: result?.id } });
     }
+
+
+    public async handleSignin(req: Request, res: Response) {
+        const validationResult = await signinPayloadModel.safeParseAsync(req.body)
+        if (validationResult.error) return res.status(400).json({ message: 'body vaildation failed', error: validationResult.error.issues });
+        const { email, password } = validationResult.data
+
+        const [userSelect] = await db.select().from(usersTable).where(eq(usersTable.email, email));
+        if (!userSelect) return res.status(404).json({ message: `user with email ${email} does not exists` })
+
+        const salt = userSelect.salt!
+        const hash = createHmac('sha256', salt).update(password).digest('hex')
+        if (userSelect.password !== hash) return res.status(400).json({ message: `email or password is incorrect` })
+
+        const token = createUserToken({ id: userSelect.id })
+        return res.json({ message: 'Signin Success', data: { token } }); 
+    }
 }
+
 
 export default AuthenticationControlller;
