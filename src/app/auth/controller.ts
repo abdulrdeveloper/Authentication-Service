@@ -5,8 +5,10 @@ import db from '../../db';
 import { usersTable } from '../../db/schema';
 import { eq } from 'drizzle-orm';
 import { createUserToken } from '../utils/token';
+import type { UserTokenPayload } from '../utils/token';
 
 class AuthenticationControlller {
+    handleGetCurrentUser: any;
 
     public async handleSignup(req: Request, res: Response) {
         const validationResult = await signupPayloadModel.safeParseAsync(req.body)
@@ -46,9 +48,23 @@ class AuthenticationControlller {
         if (userSelect.password !== hash) return res.status(400).json({ message: `email or password is incorrect` })
 
         const token = createUserToken({ id: userSelect.id })
-        return res.json({ message: 'Signin Success', data: { token } }); 
+        return res.json({ message: 'Signin Success', data: { token } });
     }
-}
 
+
+    public async handleMe(req: Request, res: Response) {
+        // @ts-ignore
+        const { id } = req.user! as UserTokenPayload
+
+        const [userResult] = await db.select().from(usersTable).where(eq(usersTable.id, id))
+
+        return res.json({
+            firstName: userResult?.firstName,
+            lastName: userResult?.lastName,
+            email: userResult?.email
+        })
+    }
+
+}
 
 export default AuthenticationControlller;
